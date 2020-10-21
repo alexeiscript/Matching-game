@@ -13,6 +13,14 @@ var cardsArray = [
     {   'name': 'Sin City',     'img': 'https://m.media-amazon.com/images/M/MV5BODZmYjMwNzEtNzVhNC00ZTRmLTk2M2UtNzE1MTQ2ZDAxNjc2XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg'}
 ];
 
+// Duplicating cards array to create match for each card
+var gameGrid = cardsArray.concat(cardsArray);
+
+// Randomizing game grid on each load
+gameGrid.sort(function() {
+    return 0.5 - Math.random();
+})
+
 // Grabbing div with id of game-board and assigning to variable
 var game = document.getElementById('game-board');
 
@@ -26,15 +34,68 @@ grid.setAttribute('class', 'grid');
 game.appendChild(grid);
 
 // Looping through each item in our cards array 
-for (var i = 0; i < cardsArray.length; i++) {
+for (var i = 0; i < gameGrid.length; i++) {
     // Creating div element and assigning to variable
     var card = document.createElement('div');
     // Applying class to div
     card.classList.add('card');
     // Setting data-name attribute of the div to the cardsArray name
-    card.dataset.name = cardsArray[i].name;
+    card.dataset.name = gameGrid[i].name;
     // Applying background image of the div to the cardsArray image
-    card.style.backgroundImage = `url(${cardsArray[i].img})`;
+    card.style.backgroundImage = `url(${gameGrid[i].img})`;
     // Append div to the grid
     grid.appendChild(card);
 }
+
+var firstGuess = '';
+var secondGuess = '';
+
+// Setting count to 0
+var count = 0;
+var previousTarget = null;
+
+// Adding 'match' class
+var match = function() {
+    var selected = document.querySelectorAll('.selected');
+    // looping through the array-like object containing 'selected' class
+    for (i = 0; i < selected.length; i++) {
+        selected[i].classList.add('match');
+    }
+}
+
+// Add event listener to grid
+grid.addEventListener('click', function(e) {
+    // Declaring variable to target clicked item
+    var clicked = e.target;
+
+    // Preventing grid section itself from being selected,
+    // only selecting divs inside grid
+    if (clicked.nodeName === 'SECTION' || clicked === previousTarget || clicked.parentNode.classList.contains('match') || clicked.parentNode.classList.contains('selected')) {
+        return;
+    }
+
+    // Adding 'selected' class only if var count is less than 2
+    if (count < 2) {
+        count++;
+        
+        if (count === 1) {
+            // Assigning first guess
+            firstGuess = clicked.dataset.name;
+            clicked.classList.add('selected');
+        } else {
+            // Assigning second guess
+            secondGuess = clicked.dataset.name;
+            clicked.classList.add('selected');
+        }
+
+        // If both guesses are not empty
+        if (firstGuess !== '' && secondGuess !== '') {
+            // And the firstGuess matches secondGuess
+            if (firstGuess === secondGuess) {
+                // Run match function
+                match();
+            }
+        }
+        previousTarget = clicked;
+    }
+});
