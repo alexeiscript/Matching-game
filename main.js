@@ -41,10 +41,20 @@ for (var i = 0; i < gameGrid.length; i++) {
     card.classList.add('card');
     // Setting data-name attribute of the div to the cardsArray name
     card.dataset.name = gameGrid[i].name;
-    // Applying background image of the div to the cardsArray image
-    card.style.backgroundImage = `url(${gameGrid[i].img})`;
-    // Append div to the grid
+    
+    // Creating front of card
+    var front = document.createElement('div');
+    front.classList.add('front');
+
+    // Creating back of card
+    var back = document.createElement('div');
+    back.classList.add('back');
+    back.style.backgroundImage = `url(${gameGrid[i].img})`;
+
+    // Appending card to grid
     grid.appendChild(card);
+    card.appendChild(front);
+    card.appendChild(back);
 }
 
 var firstGuess = '';
@@ -53,6 +63,7 @@ var secondGuess = '';
 // Setting count to 0
 var count = 0;
 var previousTarget = null;
+var delay = 1200;
 
 // Adding 'match' class
 var match = function() {
@@ -60,6 +71,19 @@ var match = function() {
     // looping through the array-like object containing 'selected' class
     for (i = 0; i < selected.length; i++) {
         selected[i].classList.add('match');
+    }
+}
+
+// Resetting guesses after two attempts
+var resetGuesses = function() {
+    firstGuess = '';
+    secondGuess = '';
+    count = 0;
+    previousTarget = null;
+
+    var selected = document.querySelectorAll('.selected');
+    for (i = 0; i < selected.length; i++) {
+        selected[i].classList.remove('selected');
     }
 }
 
@@ -80,12 +104,12 @@ grid.addEventListener('click', function(e) {
         
         if (count === 1) {
             // Assigning first guess
-            firstGuess = clicked.dataset.name;
-            clicked.classList.add('selected');
+            firstGuess = clicked.parentNode.dataset.name;
+            clicked.parentNode.classList.add('selected');
         } else {
             // Assigning second guess
-            secondGuess = clicked.dataset.name;
-            clicked.classList.add('selected');
+            secondGuess = clicked.parentNode.dataset.name;
+            clicked.parentNode.classList.add('selected');
         }
 
         // If both guesses are not empty
@@ -93,7 +117,10 @@ grid.addEventListener('click', function(e) {
             // And the firstGuess matches secondGuess
             if (firstGuess === secondGuess) {
                 // Run match function
-                match();
+                setTimeout(match, delay);
+                setTimeout(resetGuesses, delay);
+            } else {
+                setTimeout(resetGuesses, delay);
             }
         }
         previousTarget = clicked;
