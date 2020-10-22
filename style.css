@@ -41,11 +41,11 @@ button:hover {
 }
 
 .card {
-    position: relative;
-    transition: all .4s linear;
-    transform-style: preserve-3d;
-    margin: 5px;
-    cursor: pointer;
+  position: relative;
+  transition: all .4s linear;
+  transform-style: preserve-3d;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .card,
@@ -75,9 +75,16 @@ button:hover {
 }
 
 .selected {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .match .front {
-    background: #6589F9 !important;
-  }
+  background: #6589F9 !important;
+}
+
+h3 {
+  position: absolute;
+  top: 40%;
+  left: 38%;
+  font-size: 30px;
+}

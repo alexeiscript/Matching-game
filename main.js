@@ -33,6 +33,8 @@ grid.setAttribute('class', 'grid');
 // Append the section to the game-board div
 game.appendChild(grid);
 
+
+
 // Looping through each item in our cards array 
 for (var i = 0; i < gameGrid.length; i++) {
     // Creating div element and assigning to variable
@@ -60,6 +62,20 @@ for (var i = 0; i < gameGrid.length; i++) {
 var firstGuess = '';
 var secondGuess = '';
 
+// Adding all matches to array
+var allMatches = [];
+
+// Displaying congrats message after matching all cards
+var congrats = function() {
+    if (allMatches.length === 12) {
+        // Creating congrats message
+        var message = document.createElement('h3');
+        message.classList.add
+        message.textContent = 'Yaaay! You did it :)';
+        game.appendChild(message);
+    }
+}
+
 // Setting count to 0
 var count = 0;
 var previousTarget = null;
@@ -72,6 +88,7 @@ var match = function() {
     for (i = 0; i < selected.length; i++) {
         selected[i].classList.add('match');
     }
+    console.log(allMatches);
 }
 
 // Resetting guesses after two attempts
@@ -119,6 +136,8 @@ grid.addEventListener('click', function(e) {
                 // Run match function
                 setTimeout(match, delay);
                 setTimeout(resetGuesses, delay);
+                allMatches.push(firstGuess);
+                setTimeout(congrats, delay);
             } else {
                 setTimeout(resetGuesses, delay);
             }
