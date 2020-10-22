@@ -7,6 +7,12 @@
 body {
   margin: 20px 0;
   background: #6589F9;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+.headings {
+  text-align: center;
 }
 
 .grid {
@@ -27,8 +33,8 @@ body {
 .card,
 .back,
 .front {
-  height: 200px;
-  width: 140px;
+  height: 180px;
+  width: 130px;
 }
 
 .back,
