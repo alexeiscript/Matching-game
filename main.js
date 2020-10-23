@@ -70,7 +70,6 @@ var congrats = function() {
     if (allMatches.length === 12) {
         // Creating congrats message
         var message = document.createElement('h3');
-        message.classList.add
         message.textContent = 'Yaaay! You did it :)';
         game.appendChild(message);
     }
