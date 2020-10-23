@@ -33,8 +33,6 @@ grid.setAttribute('class', 'grid');
 // Append the section to the game-board div
 game.appendChild(grid);
 
-
-
 // Looping through each item in our cards array 
 for (var i = 0; i < gameGrid.length; i++) {
     // Creating div element and assigning to variable
@@ -70,10 +68,6 @@ var congrats = function() {
     if (allMatches.length === 12) {
         // Creating congrats message
         var message = document.createElement('h3');
-<<<<<<< HEAD
-=======
-        message.classList.add
->>>>>>> 22fb696615f9fead2663d64a18dc179e844bad16
         message.textContent = 'Yaaay! You did it :)';
         game.appendChild(message);
     }
